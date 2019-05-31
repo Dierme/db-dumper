@@ -1,14 +1,18 @@
 <?php
+
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
+
 return [
     'database' => [
-        'driver' => 'pgsql',
-        'database' => 'dbk',
-        'username' => 'homestead',
-        'password' => 'secret',
-        'dump_folder' => '/home/vagrant/code/db-dumper/dumps',
+        'driver' => getenv('DATABASE_DRIVER'),
+        'database' => getenv('DATABASE_NAME'),
+        'username' => getenv('DATABASE_USERNAME'),
+        'password' => getenv('DATABASE_PASSWORD'),
+        'dump_folder' => getenv('DUMP_FOLDER'),
     ],
 
     'log' => [
-        'path' => '/home/vagrant/code/db-dumper/log'
+        'path' => getenv('LOG_PATH')
     ]
 ];
