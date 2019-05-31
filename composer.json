@@ -1,0 +1,6 @@
+{
+  "require": {
+    "spatie/db-dumper": "^2.14",
+    "monolog/monolog": "^1.24"
+  }
+}
