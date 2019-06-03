@@ -11,7 +11,6 @@ $database_conf = $config['database'];
 $log_conf = $config['log'];
 
 # Check if log file exists. If not - create one
-//$week_number = date('W', time());
 $full_file_name = $log_conf['path'] . '/' . 'week-' . date('W', time()) . '.log';
 if (!file_exists($full_file_name)) {
     fopen($full_file_name, 'w');
@@ -23,14 +22,16 @@ $Logger->pushHandler(new StreamHandler($full_file_name, Logger::INFO));
 
 # Dumping the DB
 $Logger->info('Begin dump');
-$Dumper = PostgreSql::create();
-$dump_name = $database_conf['database'] . '-' . strval(time()) . '.sql';
-
 try {
+    $Dumper = PostgreSql::create();
+    $dump_name = $database_conf['database'] . '-' . strval(time()) . '.sql';
+
     $Dumper->setDbName($database_conf['database'])
         ->setUserName($database_conf['username'])
         ->setPassword($database_conf['password'])
         ->dumpToFile($database_conf['dump_folder'] . '/' . $dump_name);
+
+    $Logger->info('Dump finished successfully!');
 } catch (\Exception $e) {
     $Logger->error('Exception', array('exception' => $e));
     throw $e;
