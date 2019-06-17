@@ -9,19 +9,21 @@ $Logger->info('Begin compressing dumps');
 try {
 	
 	$full_zip_name = $conf_zip['folder'] . '/' . 'dumps-week-' . date('W', time()) . '.zip';
-//	if (!file_exists($full_file_name)) {
-//		fopen($full_file_name, 'w');
-//	}
 	
+	# initializing default zipper
 	$zip = new DefaultZipper($full_zip_name);
+	
+	# looking for dumps in the folder
 	$found_files = $zip->addGlob($config['database']['dump_folder'] . '/dbk-*.sql');
 	$Logger->info("numfiles: " . $zip->numFiles);
 	$Logger->info("status:" . $zip->status);
-	$zip->zip();
 	
-	foreach ($found_files as $file) {
-		if (!unlink($file)) {
-			$Logger->warning(sprintf('Could not delete a file %s', $file));
+	# zipping and deleting files if zip was successful
+	if($zip->zip()) {
+		foreach ($found_files as $file) {
+			if (!unlink($file)) {
+				$Logger->warning(sprintf('Could not delete a file %s', $file));
+			}
 		}
 	}
 	
