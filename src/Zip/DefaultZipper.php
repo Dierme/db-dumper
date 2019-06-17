@@ -35,7 +35,7 @@ class DefaultZipper implements IEngine
 		if ($this->Engine->open($path, ZipArchive::CREATE) !== TRUE) {
 			throw new \Exception("cannot open <$path>\n");
 		}
-		
+//		print_r($path);
 		return true;
 	}
 	
