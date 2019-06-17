@@ -4,6 +4,7 @@ require_once 'bootstrap.php';
 use DbDumper\Zip\DefaultZipper;
 
 $conf_zip = $config['archive'];
+$db_config = $config['database'];
 # Compress DB dumps
 $Logger->info('Begin compressing dumps');
 try {
@@ -14,7 +15,7 @@ try {
 	$zip = new DefaultZipper($full_zip_name);
 	
 	# looking for dumps in the folder
-	$found_files = $zip->addGlob($config['database']['dump_folder'] . '/dbk-*.sql');
+	$found_files = $zip->addGlob($db_config['dump_folder'] . '/'.$db_config['db_name'].'-*.sql');
 	$Logger->info("numfiles: " . $zip->numFiles);
 	$Logger->info("status:" . $zip->status);
 	
