@@ -15,7 +15,6 @@ try {
 	$zip = new DefaultZipper($full_zip_name);
 	
 	# looking for dumps in the folder
-	print ($db_config['dump_folder'] . '/' . $db_config['db_name'] . '-*.sql');
 	$found_files = $zip->addGlob($db_config['dump_folder'] . '/' . $db_config['db_name'] . '-*.sql');
 	$Logger->info("numfiles: " . $zip->numFiles);
 	$Logger->info("status:" . $zip->status);
